@@ -8,8 +8,24 @@ export default {
     return {
       inputData: [],
       meshData: [],
-      meshOffset: 2,
+      meshOffset: 5.5,
     };
+  },
+  computed: {
+    preparedMeshData() {
+      const X = [];
+      const Y = [];
+      const Z = [];
+      this.meshData.map(row=>{
+        row.map(item=>{
+          X.push(item.X);
+          Y.push(item.Y);
+          Z.push(item.Z);
+        });
+      });
+      if(X.length && Y.length && Z.length ) return {x:X.reverse(), y:Y.reverse(), z:Z.reverse()};
+      return {};
+    },
   },
   watch: {
     inputData (){
@@ -49,7 +65,7 @@ export default {
 <template>
   <div>
     <h1>Container</h1>
-    <Mesh />
+    <Mesh :mesh-data="preparedMeshData" />
     <input-container @onMeshDatainput="onDataInput" />
   </div>
 </template>

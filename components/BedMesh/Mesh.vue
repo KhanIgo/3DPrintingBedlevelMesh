@@ -4,19 +4,42 @@ import Plotly from "plotly.js";
 export default {
   name: "Mesh",
   props: {
-    meshData: {},
+    meshData: {
+      type: Object,
+      default: ()=>{},
+    },
+  },
+  watch: {
+    mesh(){
+      this.initPlotly();
+    },
+  },
+  computed: {
+    mesh() {
+      console.log('Object.keys(this.meshData)', Object.keys(this.meshData));
+      if(Object.keys(this.meshData).length==3) return this.meshData;
+      else return this.defaultMeshData;
+      // return this.defaultMeshData;
+    }
   },
   data() {
     return {
-      data: [
-        {
-          x: [1, 2, 3, 4],
-          y: [10, 15, 13, 17],
-          type: "scatter",
-        },
-      ],
+      defaultMeshData: {
+        x: [5.5,11,16.5,22,27.5,5.5,11,16.5,22,27.5,5.5,11,16.5,22,27.5,5.5,11,16.5,22,27.5,5.5,11,16.5,22,27.5],
+        y: [5.5,11,16.5,22,27.5,5.5,11,16.5,22,27.5,5.5,11,16.5,22,27.5,5.5,11,16.5,22,27.5,5.5,11,16.5,22,27.5],
+        z: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      },
       layout: {
-        title: "My graph",
+        title: 'Mt Bruno Elevation',
+        autosize: false,
+        width: 600,
+        height: 800,
+        margin: {
+          l: 65,
+          r: 50,
+          b: 65,
+          t: 90
+        }
       },
     };
   },
@@ -24,21 +47,16 @@ export default {
     initPlotly() {
       const data = [{
           type: "mesh3d",
-        x: [0, 1, 2, 3],
-        y: [0, 0, 1, 2],
-        z: [0, 2, 0, 1],
-        // i: [0, 0, 0],
-        // j: [1, 2, 3],
-        // k: [2, 3, 1],
-        intensity: [0, 0.33, 0.66, 1],
-        colorscale: [
-          [0, 'rgb(255, 0, 0)'],
-          [0.5, 'rgb(0, 255, 0)'],
-          [1, 'rgb(0, 0, 255)']
-        ]
+          ...this.mesh,
+        // intensity: [0, 0.33, 0.66, 1],
+        // colorscale: [
+        //   [0, 'rgb(255, 0, 0)'],
+        //   [0.5, 'rgb(0, 255, 0)'],
+        //   [1, 'rgb(0, 0, 255)']
+        // ]
       }
       ];
-      Plotly.newPlot("gd", data);
+      Plotly.newPlot("gd", data, this.layout);
     }
   },
   mounted() {
