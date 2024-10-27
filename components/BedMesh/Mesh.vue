@@ -3,6 +3,9 @@ import Plotly from "plotly.js";
 
 export default {
   name: "Mesh",
+  props: {
+    meshData: {},
+  },
   data() {
     return {
       data: [
@@ -20,10 +23,10 @@ export default {
   methods: {
     initPlotly() {
       const data = [{
-        type: "mesh3d",
-        x: [0, 1, 2],
-        y: [0, 0, 1],
-        z: [0, 2, 0],
+          type: "mesh3d",
+        x: [0, 1, 2, 3],
+        y: [0, 0, 1, 2],
+        z: [0, 2, 0, 1],
         // i: [0, 0, 0],
         // j: [1, 2, 3],
         // k: [2, 3, 1],
