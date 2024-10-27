@@ -13,17 +13,26 @@ export default {
   },
   computed: {
     preparedMeshData() {
-      const X = [];
-      const Y = [];
-      const Z = [];
-      this.meshData.map(row=>{
-        row.map(item=>{
-          X.push(item.X);
-          Y.push(item.Y);
-          Z.push(item.Z);
+      // const X = [];
+      // const Y = [];
+      // const Z = [];
+      // this.meshData.map(row=>{
+      //   row.map(item=>{
+      //     X.push(item.X);
+      //     Y.push(item.Y);
+      //     Z.push(item.Z);
+      //   });
+      // });
+      // if(X.length && Y.length && Z.length ) return {x:X.reverse(), y:Y.reverse(), z:Z.reverse()};
+      // return {};
+      if(this.inputData.length) {
+        let z = [...this.inputData];
+        z.reverse();
+        z = z.map(row=>{
+          return row.reverse();
         });
-      });
-      if(X.length && Y.length && Z.length ) return {x:X.reverse(), y:Y.reverse(), z:Z.reverse()};
+        return {z};
+      }
       return {};
     },
   },
@@ -38,10 +47,11 @@ export default {
       this.inputData = data;
     },
     inputDataToMeshData() {
-      const res =  this.inputData.map( (item, index) => {
+      const data = [...this.inputData].reverse();
+      const res =  data.map( (item, index) => {
         return this.inputRowToMeshRow(item, index);
       });
-      console.log('inputDataToMeshData', res);
+      // console.log('inputDataToMeshData', res);
       this.meshData = res;
     },
     inputRowToMeshRow(row, rowIndex) {
@@ -50,7 +60,7 @@ export default {
       })
     },
     inputItemToMeshItem(item, itemIndex, rowIndex) {
-      console.log('item, itemIndex, rowIndex', {item, itemIndex, rowIndex});
+      // console.log('item, itemIndex, rowIndex', {item, itemIndex, rowIndex});
       const res = {
         Y: (rowIndex+1)*this.meshOffset,
         X: (itemIndex+1)*this.meshOffset,
