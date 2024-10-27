@@ -50,8 +50,10 @@ export default {
   methods: {
     initPlotly() {
       const data = [{
-          type: "surface",
-          ...this.mesh,
+        customdata: ['sdfsdfs', 'dfgdg'],
+        ...this.mesh,
+        // type: 'surface'
+        type: 'heatmap'
       }
       ];
       Plotly.newPlot("gd", data, this.layout);
@@ -65,7 +67,7 @@ export default {
 
 <template>
   <div class="cnt">
-        <div id="gd"></div>
+    <div id="gd"></div>
   </div>
 </template>
 

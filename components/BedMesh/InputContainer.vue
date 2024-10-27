@@ -1,6 +1,8 @@
 <script>
+import DropZone from '~/components/BedMesh/DropZone.vue'
 export default {
   name: 'InputContainer',
+  components: { DropZone },
   data() {
     return {
       meshString: '',
@@ -36,6 +38,9 @@ export default {
   <div class="cnt">
     <p class="title">Данные Mesh</p>
     <textarea class="textarea" @change="onChange" placeholder="Вставьте mesh данные из printer.cfg"></textarea>
+    <div class="cnt">
+      <DropZone />
+    </div>
   </div>
 </template>
 
