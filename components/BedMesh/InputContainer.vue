@@ -33,12 +33,28 @@ export default {
 </script>
 
 <template>
-  <div>
-    <h2>InputContainer</h2>
-    <textarea @change="onChange"></textarea>
+  <div class="cnt">
+    <p class="title">Данные Mesh</p>
+    <textarea class="textarea" @change="onChange" placeholder="Вставьте mesh данные из printer.cfg"></textarea>
   </div>
 </template>
 
 <style scoped>
-
+  .textarea {
+    font-size: 12px;
+    height: 7em;
+    width: 100%;
+    max-width: 550px;
+    resize: none;
+    border: solid 1px grey;
+    border-radius: 5px;
+    padding: 10px;
+  }
+  .title {
+    margin-bottom: 15px;
+  }
+  .cnt {
+    border-bottom: solid 1px grey;
+    padding-bottom: 25px;
+  }
 </style>

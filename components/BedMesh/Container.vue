@@ -1,30 +1,21 @@
 <script>
 import InputContainer from '~/components/BedMesh/InputContainer.vue'
 import Mesh from '~/components/BedMesh/Mesh.vue'
+import TableDescription from '~/components/BedMesh/TableDescription.vue'
 export default {
   name: 'Container',
-  components: {InputContainer, Mesh},
+  components: {InputContainer, Mesh, TableDescription},
   data() {
     return {
       inputData: [],
       meshData: [],
       meshOffset: 5.5,
+      min: 0,
+      max: 0,
     };
   },
   computed: {
     preparedMeshData() {
-      // const X = [];
-      // const Y = [];
-      // const Z = [];
-      // this.meshData.map(row=>{
-      //   row.map(item=>{
-      //     X.push(item.X);
-      //     Y.push(item.Y);
-      //     Z.push(item.Z);
-      //   });
-      // });
-      // if(X.length && Y.length && Z.length ) return {x:X.reverse(), y:Y.reverse(), z:Z.reverse()};
-      // return {};
       if(this.inputData.length) {
         let z = [...this.inputData];
         z.reverse();
@@ -45,13 +36,27 @@ export default {
     onDataInput(data){
       console.log( 'onDataInput', data);
       this.inputData = data;
+      let tempData = [];
+      const sortByMin = (a,b)=>{
+        return a-b;
+      }
+      const sortByMax = (a,b)=>{
+        return b-a;
+      }
+
+      data.map(item=>{
+        tempData = tempData.concat(item);
+      });
+      tempData.sort(sortByMin);
+      this.min = tempData[0];
+      tempData.sort(sortByMax);
+      this.max = tempData[0];
     },
     inputDataToMeshData() {
       const data = [...this.inputData].reverse();
       const res =  data.map( (item, index) => {
         return this.inputRowToMeshRow(item, index);
       });
-      // console.log('inputDataToMeshData', res);
       this.meshData = res;
     },
     inputRowToMeshRow(row, rowIndex) {
@@ -60,7 +65,6 @@ export default {
       })
     },
     inputItemToMeshItem(item, itemIndex, rowIndex) {
-      // console.log('item, itemIndex, rowIndex', {item, itemIndex, rowIndex});
       const res = {
         Y: (rowIndex+1)*this.meshOffset,
         X: (itemIndex+1)*this.meshOffset,
@@ -73,13 +77,21 @@ export default {
 </script>
 
 <template>
-  <div>
-    <h1>Container</h1>
-    <Mesh :mesh-data="preparedMeshData" />
+  <div class="row container">
+    <h1>График карты стола для Adventurer 5M / 5M Pro</h1>
     <input-container @onMeshDatainput="onDataInput" />
+    <Mesh :mesh-data="preparedMeshData" />
+    <table-description :min="min" :max="max" />
   </div>
 </template>
 
 <style scoped>
-
+  .container {
+    padding: 35px 0 35px;
+  }
+  h1 {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 65px;
+  }
 </style>
