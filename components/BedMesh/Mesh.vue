@@ -1,18 +1,20 @@
 <script>
-import Plotly from "plotly.js";
-
+import Plotly  from '~/components/BedMesh/Plotly.vue'
 export default {
   name: "Mesh",
+  components: { Plotly },
   props: {
     meshData: {
       type: Object,
       default: ()=>{},
     },
+    type: {
+      type: String,
+      default: '',
+    },
   },
   watch: {
-    mesh(){
-      this.initPlotly();
-    },
+    mesh(){},
   },
   computed: {
     mesh() {
@@ -43,31 +45,29 @@ export default {
           r: 50,
           b: 65,
           t: 90
-        }
+        },
       },
     };
   },
   methods: {
-    initPlotly() {
-      const data = [{
-        customdata: ['sdfsdfs', 'dfgdg'],
-        ...this.mesh,
-        // type: 'surface'
-        type: 'heatmap'
-      }
-      ];
-      Plotly.newPlot("gd", data, this.layout);
-    }
+    onSetView3d() {
+      this.$emit('set-type', 'surface')
+    },
+    onSetViewFlat() {
+      this.$emit('set-type', 'heatmap')
+    },
   },
-  mounted() {
-    setTimeout(this.initPlotly, 500);
-  },
+
 };
 </script>
 
 <template>
   <div class="cnt">
-    <div id="gd"></div>
+    <div class="mesh-btns">
+      <button class="ui-btn" @click="onSetView3d">3D визуализация</button>
+      <button class="ui-btn" @click="onSetViewFlat">Плоский вид</button>
+    </div>
+    <plotly :type="type" :mesh-data="mesh" :layout="layout" />
   </div>
 </template>
 

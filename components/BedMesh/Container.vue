@@ -12,6 +12,7 @@ export default {
       meshOffset: 5.5,
       min: 0,
       max: 0,
+      type: 'surface',
     };
   },
   computed: {
@@ -33,6 +34,10 @@ export default {
     },
   },
   methods: {
+    onSetType(data) {
+      console.log('onSetType', data);
+      this.type = data;
+    },
     onDataInput(data){
       console.log( 'onDataInput', data);
       this.inputData = data;
@@ -80,7 +85,7 @@ export default {
   <div class="row container">
     <h1>График карты стола для Adventurer 5M / 5M Pro</h1>
     <input-container @onMeshDatainput="onDataInput" />
-    <Mesh :mesh-data="preparedMeshData" />
+    <Mesh :mesh-data="preparedMeshData" :type="type" @set-type="onSetType" />
     <table-description :min="min" :max="max" />
   </div>
 </template>
