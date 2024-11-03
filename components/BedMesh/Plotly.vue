@@ -13,8 +13,8 @@ export default {
       default: ()=>{},
     },
     meshData: {
-      type: Array,
-      default: ()=>[],
+      type: Object,
+      default: ()=>{},
     },
   },
   watch: {
@@ -27,24 +27,33 @@ export default {
   },
   methods: {
     initPlotly() {
+      let xy = [-110,-55,0,55,110];
+      let x = [
+        [...xy], [...xy], [...xy], [...xy], [...xy]
+      ];
+      let y = [
+        [...xy], [...xy], [...xy], [...xy], [...xy]
+      ];
       const data = [{
-        // customdata: ['sdfsdfs', 'dfgdg'],
+        customdata: ['sdfsdfs', 'dfgdg'],
+        // mode: 'lines+markers',
         // mode: 'lines+markers+text',
-        mode: 'lines+markers+text',
-        marker: {
-          size: [20, 40, 25, 10, 60, 90, 30],
-        },
-        customdata: [['gngh', "gngh", 'wqxzcb']],
-        name: 'group',
-        nameposition: 'bottom',
-        text: 'group',
-        textposition: 'bottom',
-        showscale: true,
-        showticklabels: true,
-        showlegend: true,
-        legend: 'ghb;clk;lc',
+        // marker: {
+        //   size: [20, 40, 25, 10, 60, 90, 30],
+        // },
+        // customdata: [['gngh', "gngh", 'wqxzcb']],
+        // name: 'group',
+        // nameposition: 'bottom',
+        // text: 'group',
+        // textposition: 'bottom',
+        // showscale: true,
+        // showticklabels: true,
+        // showlegend: true,
+        // legend: 'ghb;clk;lc',
 
+        // x,y,
         ...this.meshData,
+        // hovertemplate: '<b class="retwer">%{text}</b>',
         // text: [
         //   ['scscs', 'ssfs', 'sfsfs',0,0],
         //   // [0,0,0,0,0],

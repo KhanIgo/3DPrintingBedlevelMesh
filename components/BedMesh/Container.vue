@@ -23,6 +23,12 @@ export default {
         z = z.map(row=>{
           return row.reverse();
         });
+
+        // z.map((item, index)=>{
+        //
+        // });
+
+
         return {z};
       }
       return {};
